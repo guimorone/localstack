@@ -1,0 +1,4 @@
+bucket = "terraform-states"
+encrypt = true
+key = "terraform/test.tfstate"
+region = "us-east-1"
