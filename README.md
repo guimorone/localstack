@@ -16,13 +16,13 @@ Check the command for you OS.
 
 - Windows
 
-```shell
+```powershell
 .\virtualenv.ps1
 ```
 
 - Linux
 
-```shell
+```sh
 bash virtualenv.sh
 ```
 
@@ -30,14 +30,14 @@ bash virtualenv.sh
 
 - Windows
 
-```shell
+```powershell
 cd .\scripts\
 .\run-infra.ps1
 ```
 
 - Linux
 
-```shell
+```sh
 cd scripts/
 bash run-infra.sh
 ```
