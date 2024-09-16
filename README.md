@@ -26,7 +26,23 @@ Invoke-Expression ".\virtualenv.ps1"
 bash virtualenv.sh
 ```
 
-2. Run terraform:
+2. Run Docker Compose:
+
+- Windows (PowerShell)
+
+```powershell
+Set-Location -Path ".\.devcontainer\"
+Invoke-Expression "docker compose up -d"
+```
+
+- Linux
+
+```sh
+cd .devcontainer/
+docker compose up -d
+```
+
+3. Run terraform:
 
 - Windows (PowerShell)
 

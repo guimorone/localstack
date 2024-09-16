@@ -1,3 +1,7 @@
+/**
+ * Backend S3 Config
+ */
+
 bucket = "terraform-states"
 encrypt = true
 key = "terraform/test.tfstate"

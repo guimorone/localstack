@@ -20,11 +20,6 @@ fi
 declare -A workspaces=(["env"]="test.${AWS_REGION}.${ENV}")
 
 pre() {
-  cd ../.devcontainer/
-
-  echo -e "${BLUE}Running local container...${NO_COLOR}"
-  docker compose up -d
-
   echo -e "${BLUE}Installing tflocal lib...${NO_COLOR}"
   python -m pip install --upgrade terraform-local
 
@@ -32,12 +27,10 @@ pre() {
   export AWS_ACCESS_KEY_ID="test"
   export AWS_SECRET_ACCESS_KEY="test"
   export AWS_DEFAULT_REGION="us-east-1"
-  export AWS_ENDPOINT_URL = "http://127.0.0.1:4566"
+  export AWS_ENDPOINT_URL="http://127.0.0.1:4566"
 
   echo -e "${BLUE}Create terraform init backend bucket...${NO_COLOR}"
   aws s3api create-bucket --bucket terraform-states --endpoint-url $AWS_ENDPOINT_URL
-
-  cd ../
 }
 
 run_deploy() {
@@ -56,7 +49,7 @@ run_deploy() {
 }
 
 pre
-cd ./iac/
+cd ../iac/
 for iac_type in "${iac_types[@]}"; do
   run_deploy $iac_type ${workspaces[$iac_type]}
   cd ../

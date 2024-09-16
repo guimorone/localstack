@@ -16,11 +16,6 @@ else {
 $Workspaces = @{"env" = "test.$AWS_REGION.$ENV" }
 
 function PreDeploy {
-  Set-Location -Path "..\.devcontainer\"
-
-  Write-Host -ForegroundColor Blue "Running local container..."
-  docker-compose up -d
-
   Write-Host -ForegroundColor Blue "Installing tflocal lib..."
   python -m pip install --upgrade terraform-local
 
@@ -31,9 +26,7 @@ function PreDeploy {
   $env:AWS_ENDPOINT_URL = "http://127.0.0.1:4566"
 
   Write-Host -ForegroundColor Blue "Create terraform init backend bucket..."
-  aws s3api create-bucket --bucket terraform-states --endpoint-url $env:AWS_ENDPOINT_URL
-
-  Set-Location -Path ".."
+  aws s3api create-bucket --bucket "terraform-states" --endpoint-url $env:AWS_ENDPOINT_URL
 }
 
 function RunDeploy {
@@ -49,18 +42,18 @@ function RunDeploy {
   Set-Location -Path ".\$IacType\"
 
   Write-Host -ForegroundColor DarkYellow "Initing Terraform..."
-  tflocal init -upgrade -migrate-state -input=false -backend-config="backends/test.tfbackend"
+  tflocal init -upgrade -migrate-state -input=false -backend-config=".\backends\test.tfbackend"
   tflocal workspace select -or-create $Workspace
 
   Write-Host -ForegroundColor DarkYellow "Terraform Planning..."
-  tflocal plan -var-file="./workspaces/$Workspace.tfvars" -input=false
+  tflocal plan -var-file=".\workspaces\$Workspace.tfvars" -input=false
 
   Write-Host -ForegroundColor DarkYellow "Terraform Applying..."
-  tflocal apply -var-file="./workspaces/$Workspace.tfvars" -input=false -auto-approve
+  tflocal apply -var-file=".\workspaces\$Workspace.tfvars" -input=false -auto-approve
 }
 
 PreDeploy
-Set-Location -Path '.\iac\'
+Set-Location -Path '..\iac\'
 
 foreach ($IacType in $IacTypes) {
   RunDeploy $IacType $Workspaces[$IacType]
