@@ -12,12 +12,12 @@ LocalStack testing with terraform
 
 Check the command for you OS.
 
-1. Create Virtual Environment:
+1. Create a Virtual Environment:
 
-- Windows
+- Windows (PowerShell)
 
 ```powershell
-.\virtualenv.ps1
+Invoke-Expression ".\virtualenv.ps1"
 ```
 
 - Linux
@@ -28,11 +28,11 @@ bash virtualenv.sh
 
 2. Run terraform:
 
-- Windows
+- Windows (PowerShell)
 
 ```powershell
-cd .\scripts\
-.\run-infra.ps1
+Set-Location -Path ".\scripts\"
+Invoke-Expression ".\run-infra.ps1"
 ```
 
 - Linux
